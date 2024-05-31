@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('stuffstocks', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("stuff_id"); //untuk FK yang PK nya id auto increments
-            $table->integer("total_avaiblable");
+            $table->integer("total_available");
             $table->integer("total_defec");
             $table->softDeletes();
             $table->timestamps();
