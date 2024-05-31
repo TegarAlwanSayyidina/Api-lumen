@@ -11,7 +11,7 @@ class Inbounstuff extends Model
     use SoftDeletes;
     protected $fillable = ["stuff_id","total", "date", "proof_file"];
 
-    protected $table = 'inboundstuffs';
+    protected $table = 'inbounstuffs';
 
     public function stuff(){
         return $this->belongsTo(Stuff::class);

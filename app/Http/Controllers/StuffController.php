@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiFormatter;
+use App\Models\Inbounstuff;
 use App\Models\Stuff;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class StuffController extends Controller
         {
             try {
                 //ambil data yg mau ditampilkan
-                $data = Stuff::all()->toArray();
+                $data = Stuff::with('stuffStock')->get();
 
                 return ApiFormatter::sendResponse(200, 'success', $data);
             }catch (\Exception $err){
@@ -98,15 +99,10 @@ class StuffController extends Controller
     public function destroy($id)
     {
         try {
-            $stuff = Stuff::where('id',$id)->first();
-            if ($stuff->inboundStuffs()->exists()) {
+            $stuff = Stuff::where('id',$id)->with('Inbounstuffs')->first();
+
+            if (count($stuff['Inbounstuffs']) > 0){
                 return ApiFormatter::sendResponse(400, 'bad request', 'Tidak Dapat Menghapus data stuff karna sudah ada inbound!');
-            }
-            elseif ($stuff->stuffStock()->exists()) {
-                return ApiFormatter::sendResponse(400, 'bad request', 'Tidak Dapat Menghapus data stuff karna sudah ada stock!');
-            }
-            elseif ($stuff->lending()->exists()) {
-                return ApiFormatter::sendResponse(400, 'bad request', 'Tidak Dapat Menghapus data stuff karna sudah ada lending!');
             }
             $checkProsess = $stuff->delete();
 
