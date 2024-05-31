@@ -29,9 +29,9 @@ class Stuff extends Model
     }
 
     //relasi hasMany : nama func jamak
-    public function inboundStuffs()
+    public function inbounstuffs()
     {
-        return $this ->hasMany(Inbounstuff::class);
+        return $this->hasMany(inbounstuff::class);
     }
 
     public function lendings()

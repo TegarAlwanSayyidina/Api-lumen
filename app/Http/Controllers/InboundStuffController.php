@@ -47,7 +47,7 @@ class InboundStuffController extends Controller
             $proofName = date('YmdHis') . "." . $proof->getClientOriginalExtension();
             $proof->move($destinationPath, $proofName);
         }
-        $createStock = InbounStuff::create([
+        $createStock = Inbounstuff::create([
             'stuff_id' => $request->stuff_id,
             'total' => $request->total,
             'date' => $request->date,
